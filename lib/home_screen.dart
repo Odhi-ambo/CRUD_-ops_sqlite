@@ -11,6 +11,7 @@ class HomeScreen extends StatefulWidget {
 class _HomeScreenState extends State<HomeScreen> {
   List<Map<String, dynamic>> _allData = [];
   bool _isLoading = true;
+  //Get all data from DB
   void _refreshData() async {
     final data = await SQLHelper.getAllData();
     setState(() {
@@ -25,9 +26,7 @@ class _HomeScreenState extends State<HomeScreen> {
     _refreshData();
   }
 
-  final TextEditingController _titleController = TextEditingController();
-  final TextEditingController _descController = TextEditingController();
-
+//add data
   Future<void> _addData() async {
     await SQLHelper.createData(_titleController.text, _descController.text);
     _refreshData();
@@ -38,8 +37,25 @@ class _HomeScreenState extends State<HomeScreen> {
     _refreshData();
   }
 
+  void _deleteData(int id) async {
+    await SQLHelper.deleteData(id);
+    ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+      backgroundColor: Colors.redAccent,
+      content: Text('Data Deleted'),
+    ));
+    _refreshData();
+  }
+
+  final TextEditingController _titleController = TextEditingController();
+  final TextEditingController _descController = TextEditingController();
+
   @override
   Widget build(BuildContext context) {
-    return Scaffold();
+    return Scaffold(
+      backgroundColor: Color(0xFFECEAF4),
+      appBar: AppBar(
+        title: Text('CRUD OPERATIONS'),
+      ),
+    );
   }
 }
