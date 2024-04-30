@@ -20,6 +20,25 @@ class _HomeScreenState extends State<HomeScreen> {
   }
 
   @override
+  void initState() {
+    super.initState();
+    _refreshData();
+  }
+
+  final TextEditingController _titleController = TextEditingController();
+  final TextEditingController _descController = TextEditingController();
+
+  Future<void> _addData() async {
+    await SQLHelper.createData(_titleController.text, _descController.text);
+    _refreshData();
+  }
+
+  Future<void> _updateData(int id) async {
+    await SQLHelper.updateData(id, _titleController.text, _descController.text);
+    _refreshData();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold();
   }
