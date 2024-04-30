@@ -52,10 +52,25 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Color(0xFFECEAF4),
-      appBar: AppBar(
-        title: Text('CRUD OPERATIONS'),
-      ),
-    );
+        backgroundColor: Color(0xFFECEAF4),
+        appBar: AppBar(
+          title: Text('CRUD OPERATIONS'),
+        ),
+        body: _isLoading
+            ? Center(
+                child: CircularProgressIndicator(),
+              )
+            : ListView.builder(
+                itemCount: _allData.length,
+                itemBuilder: (context, index) => Card(
+                  margin: EdgeInsets.all(15),
+                  child: ListTile(
+                    title: Padding(
+                      padding: EdgeInsets.symmetric(vertical: 5),
+                      child: Text(_allData[index]['title']),
+                    ),
+                  ),
+                ),
+              ));
   }
 }
