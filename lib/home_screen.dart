@@ -50,6 +50,8 @@ class _HomeScreenState extends State<HomeScreen> {
   final TextEditingController _descController = TextEditingController();
 
   void showBottomSheet(int? id) async {
+    //if id is not null it will update otherwise it will new data
+    //when edit icon is pressed then id will be given to bottom sheet function and it will edit
     if (id != null) {
       final existingData =
           _allData.firstWhere((element) => element['id'] == id);
@@ -147,6 +149,30 @@ class _HomeScreenState extends State<HomeScreen> {
                       _allData[index]['title'],
                       style: TextStyle(fontSize: 20),
                     ),
+                  ),
+                  subtitle: Text(_allData[index]['desc']),
+                  trailing: Row(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      IconButton(
+                        onPressed: () {
+                          showBottomSheet(_allData[index]['id']);
+                        },
+                        icon: Icon(
+                          Icons.edit,
+                          color: Colors.indigo,
+                        ),
+                      ),
+                      IconButton(
+                        onPressed: () {
+                          _deleteData(_allData[index]['id']);
+                        },
+                        icon: Icon(
+                          Icons.delete,
+                          color: Colors.redAccent,
+                        ),
+                      ),
+                    ],
                   ),
                 ),
               ),
