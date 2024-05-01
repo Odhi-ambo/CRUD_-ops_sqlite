@@ -88,7 +88,37 @@ class _HomeScreenState extends State<HomeScreen> {
                 border: OutlineInputBorder(),
                 hintText: 'Description',
               ),
-            )
+            ),
+            SizedBox(
+              height: 20,
+            ),
+            Center(
+              child: ElevatedButton(
+                onPressed: () async {
+                  if (id == null) {
+                    await _addData();
+                  }
+                  if (id != null) {
+                    await _updateData(id);
+                  }
+                  _titleController.text = "";
+                  _descController.text = "";
+                  //hide bottom sheet
+                  Navigator.of(context).pop();
+                  print('Data Added');
+                },
+                child: Padding(
+                  padding: EdgeInsets.all(18),
+                  child: Text(
+                    id == null ? "Add Data" : "Update",
+                    style: TextStyle(
+                      fontSize: 18,
+                      fontWeight: FontWeight.w500,
+                    ),
+                  ),
+                ),
+              ),
+            ),
           ],
         ),
       ),
