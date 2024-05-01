@@ -49,28 +49,63 @@ class _HomeScreenState extends State<HomeScreen> {
   final TextEditingController _titleController = TextEditingController();
   final TextEditingController _descController = TextEditingController();
 
+  void showBottomSheet(int? id) async {
+    if (id != null) {
+      final existingData =
+          _allData.firstWhere((element) => element['id'] == id);
+      _titleController.text = existingData['title'];
+      _titleController.text = existingData['desc'];
+    }
+    showModalBottomSheet(
+      elevation: 5,
+      isScrollControlled: true,
+      context: context,
+      builder: (_) => Container(
+        padding: EdgeInsets.only(
+          top: 30,
+          left: 15,
+          right: 15,
+          bottom: MediaQuery.of(context).viewInsets.bottom + 50,
+        ),
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          crossAxisAlignment: CrossAxisAlignment.end,
+          children: [],
+        ),
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        backgroundColor: Color(0xFFECEAF4),
-        appBar: AppBar(
-          title: Text('CRUD OPERATIONS'),
-        ),
-        body: _isLoading
-            ? Center(
-                child: CircularProgressIndicator(),
-              )
-            : ListView.builder(
-                itemCount: _allData.length,
-                itemBuilder: (context, index) => Card(
-                  margin: EdgeInsets.all(15),
-                  child: ListTile(
-                    title: Padding(
-                      padding: EdgeInsets.symmetric(vertical: 5),
-                      child: Text(_allData[index]['title']),
+      backgroundColor: Color(0xFFECEAF4),
+      appBar: AppBar(
+        title: Text('CRUD OPERATIONS'),
+      ),
+      body: _isLoading
+          ? Center(
+              child: CircularProgressIndicator(),
+            )
+          : ListView.builder(
+              itemCount: _allData.length,
+              itemBuilder: (context, index) => Card(
+                margin: EdgeInsets.all(15),
+                child: ListTile(
+                  title: Padding(
+                    padding: EdgeInsets.symmetric(vertical: 5),
+                    child: Text(
+                      _allData[index]['title'],
+                      style: TextStyle(fontSize: 20),
                     ),
                   ),
                 ),
-              ));
+              ),
+            ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () => showBottomSheet(null),
+        child: Icon(Icons.add),
+      ),
+    );
   }
 }
